@@ -12,7 +12,7 @@ const logger = createLogger();
 
 const store = createStore(
   reducers,
-  applyMiddleware(logger, thunk)
+  applyMiddleware(thunk, logger)
 );
 
 const render = () => {
@@ -28,7 +28,7 @@ render();
 store.subscribe(render);
 
 if (module.hot) {
-  module.hot.accept();  
+  module.hot.accept();
   // module.hot.accept('./reducers', () => {
   //   const nextRootReducer = require('./reducers/index');
   //   store.replaceReducer(nextRootReducer);

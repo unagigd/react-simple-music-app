@@ -1,18 +1,11 @@
 import React from 'react';
-import Artists from './Artists';
+import Artists from '../containers/Artists';
 import SearchForm from '../containers/SearchForm';
-
-const list = [
-  // {
-  //   id: 1,
-  //   name: 'Artist 1'
-  // }
-];
 
 const MusicApp = () => (
   <div>
     <SearchForm />
-    <Artists artists={list} />
+    <Artists />
   </div>
 );
 
