@@ -4,8 +4,10 @@ import { createStore, applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
+import { Router, Route, hashHistory  } from 'react-router'
 
-import MusicApp from './components/MusicApp';
+import Main from './components/Main';
+import Albums from './components/Albums';
 import reducers from './reducers';
 
 const logger = createLogger();
@@ -18,7 +20,10 @@ const store = createStore(
 const render = () => {
   ReactDOM.render(
     <Provider store={store}>
-      <MusicApp />
+      <Router history={hashHistory}>
+        <Route path="/" component={Main} />
+        <Route path="/albums" component={Albums} />
+      </Router>
     </Provider>,
     document.getElementById('app')
   );

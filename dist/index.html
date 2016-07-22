@@ -3,9 +3,26 @@
   <head>
     <meta charset="utf-8">
     <title>My music App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css" media="screen">
+    <style media="screen">
+      .msa-list {
+        margin-top: 30px;
+      }
+      .msa-list-item {
+        padding: 5px;
+        list-style-type: none;
+      }
+      .msa-list-item a,
+      .msa-list-item a:hover {
+        text-decoration: none;
+      }
+      .msa-list-item .caption {
+        margin-top: 3px;
+      }
+    </style>
   </head>
-  <body>
-    <div id="app"></div>
+  <body style="padding: 20px;">
+    <div id="app" class="container"></div>
     <script type="text/javascript" src="/bundle.js"></script>
   </body>
 </html>

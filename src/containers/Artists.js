@@ -1,14 +1,16 @@
 import { connect } from 'react-redux';
 import ArtistsComponent from '../components/Artists';
+import { fetchArtists } from '../actions';
 
 const mapStateToProps = (state, props) => {
   return {
-    artists: state.artists.items
+    artists: state.artists,
+    query: state.searchQuery
   }
 };
 
-const mapDispatchToProps = (dispatch, props) => {
-  return {}
+const mapDispatchToProps = {
+  fetchArtists
 };
 
 const Artists = connect(

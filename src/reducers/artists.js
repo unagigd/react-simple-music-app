@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions';
+import config from '../config';
 
 const artists = handleActions({
   REQUEST_ARTISTS: {
@@ -11,18 +12,33 @@ const artists = handleActions({
   },
   RECEIVED_ARTISTS: {
     next(state, action) {
-      const { items } = action.payload.artists;
+      let {
+        items,
+        next,
+        previous: prev,
+        total,
+        offset
+      } = action.payload.artists;
 
       return Object.assign({}, state, {
         isFetching: false,
-        items
+        items,
+        isNext: next !== null,
+        isPrev: prev !== null,
+        total,
+        offset
       });
     },
     throw(state, action) {}
   }
 }, {
   isFetching: false,
-  items: []
+  items: [],
+  isNext: false,
+  isPrev: false,
+  total: 0,
+  offset: 0,
+  limit: config.artistsLimit
 });
 
 export default artists;

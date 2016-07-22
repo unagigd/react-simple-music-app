@@ -1,8 +1,9 @@
 import { createAction } from 'redux-actions';
-import config from '../config';
+import fetch from 'isomorphic-fetch';
+import { getArtistsUrl, getAlbumsUrl } from '../utils';
 
 const getJSON = (url) => {
-  return window.fetch(url).then(res => {
+  return fetch(url).then(res => {
     if (res.ok) {
       return res.json();
     }
@@ -11,26 +12,20 @@ const getJSON = (url) => {
   });
 }
 
-const getArtists = (query) => {
-  const url = `${config.artistsUrl}${query}`;
-  return getJSON(url);
-}
+export const fetchArtists = (query, offset, limit) => (dispatch) => {
+  let url = getArtistsUrl(query, offset, limit);
 
-const getAlbums = (id) => {
-  const url = config.albumsUrl.replace(':id', id);
-  return getJSON(url);
-}
-
-const fetchArtists = (query) => (dispatch) => {
   dispatch(createAction('REQUEST_ARTISTS')());
-  getArtists(query).then(
+  getJSON(url).then(
     data => dispatch(createAction('RECEIVED_ARTISTS')(data))
   );
 }
 
-export const fetchAlbums = (id) => (dispatch) => {
+export const fetchAlbums = (id, offset, limit) => (dispatch) => {
+  let url = getAlbumsUrl(id, offset, limit);
+
   dispatch(createAction('REQUEST_ALBUMS')());
-  getAlbums(id).then(
+  getJSON(url).then(
     data => dispatch(createAction('RECEIVED_ALBUMS')(data))
   );
 }
