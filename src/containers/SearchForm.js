@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
-import { submitQuery } from '../actions';
+import { submitArtistsQuery } from '../actions';
 import SearchFormComponent from '../components/SearchForm';
 
 const mapDispatchToProps = {
-  onSubmit: submitQuery
+  onSubmit: submitArtistsQuery
 };
 
 const SearchForm = connect(
-  () => { return {} },
+  () => ({}),
   mapDispatchToProps
 )(SearchFormComponent);
 

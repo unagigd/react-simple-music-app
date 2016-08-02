@@ -6,7 +6,7 @@ import albums from './albums';
 const reducers = combineReducers({
   searchQuery,
   artists,
-  albums
+  albums,
 });
 
 export default reducers;

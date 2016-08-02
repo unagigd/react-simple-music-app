@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 
 const albums = handleActions({
-  REQUEST_ALBUMS: {
+  'REQUEST_ALBUMS': {
     next(state, action) {
       return Object.assign({}, state, {
         isFetching: true
@@ -9,19 +9,32 @@ const albums = handleActions({
     },
     throw(state, action) {}
   },
-  RECEIVED_ALBUMS: {
+  'RECEIVED_ALBUMS': {
     next(state, action) {
-      const { items } = action.payload;
+      let { items, total } = action.payload.data;
+      let id = action.payload.id;
+      let page = action.payload.page;
+
+      let singleResult = Object.assign({}, state.results[id], {
+        [page]: items
+      });
+
+      let results = Object.assign({}, state.results, {
+        [id]: singleResult
+      });
+
       return Object.assign({}, state, {
         isFetching: false,
-        items
+        results,
+        total,
       });
     },
     throw(state, action) {}
   }
 }, {
   isFetching: false,
-  items: []
+  results: {},
+  total: 0,
 });
 
 export default albums;

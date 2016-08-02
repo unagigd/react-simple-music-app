@@ -1,12 +1,13 @@
-import React from 'react';
-import Artists from '../containers/Artists';
+import React, { PropTypes, Component } from 'react';
 import SearchForm from '../containers/SearchForm';
+import config from '../config';
 
-const Main = () => (
+const Main = ({ children, params: {artistId} }) => (
   <div>
-    <SearchForm />
-    <Artists />
+    { !artistId && <SearchForm /> }
+    { children }
   </div>
 );
+
 
 export default Main;
