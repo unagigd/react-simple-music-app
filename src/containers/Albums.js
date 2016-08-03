@@ -19,16 +19,16 @@ const mapStateToProps = (state, props) => {
 
   return {
     list,
-    currentPage: parseInt(page),
     artistId,
-    searchQuery,
     limit: config.albumsLimit,
-    currentArtist,
-    currentArtistIsFetching,
-    isFetching,
     total,
     path,
     backUrl,
+    currentArtist,
+    currentArtistIsFetching,
+    isFetching,
+    searchQuery,
+    currentPage: parseInt(page),
   }
 };
 

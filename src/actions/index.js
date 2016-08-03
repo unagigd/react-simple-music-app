@@ -48,10 +48,17 @@ export const fetchArtists = (query, page, limit) => (dispatch, getState) => {
   );
 }
 
-export const fetchAlbums = (id, page, limit) => (dispatch) => {
+export const fetchAlbums = (id, page, limit) => (dispatch, getState) => {
   let url = getAlbumsUrl(id, page, limit);
+  let storedData = getState().albums.results[id];
 
   dispatch(createAction('REQUEST_ALBUMS')());
+
+  if(storedData && storedData[page]) {
+    dispatch(createAction('RECEIVED_ALBUMS_FROM_CACHE')());
+    return;
+  }
+
   getJSON(url).then(
     data => dispatch(createAction('RECEIVED_ALBUMS')({
       data,

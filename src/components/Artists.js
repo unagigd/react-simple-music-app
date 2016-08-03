@@ -23,7 +23,6 @@ class Artists extends Component {
   }
 
   componentWillMount() {
-    this.fetched = false;
     this.init(this.props);
   }
 
@@ -37,15 +36,10 @@ class Artists extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    this.fetched = false;
     let { searchQuery, currentPage, isFetching } = this.props;
     let { searchQuery: nextQuery, currentPage: nextPage, isFetching: nextIsFetching } = nextProps;
-    let fetched = isFetching && !nextIsFetching;
 
-    if(searchQuery != nextQuery || currentPage != nextPage || fetched) {
-      if(fetched) {
-        this.fetched = true;
-      }
+    if(searchQuery != nextQuery || currentPage != nextPage || isFetching != nextIsFetching) {
       return true;
     }
     return false;
@@ -60,7 +54,7 @@ class Artists extends Component {
     let { list, limit, currentPage, total, path, isFetching } = this.props;
 
     return (
-      <div>
+      <div className={isFetching ? 'show-loader': ''}>
       { list.length > 0 &&
         <div className="msa-list">
           <ul className="row">
@@ -69,7 +63,7 @@ class Artists extends Component {
           <Paginator limit={limit} path={path} total={total} currentPage={currentPage} />
         </div>
       }
-      { this.fetched && list.length == 0 &&
+      { !isFetching && list.length == 0 &&
         <div className="alert alert-danger text-center">
           We couldn't find any matching artist
         </div>

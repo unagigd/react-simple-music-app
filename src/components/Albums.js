@@ -10,10 +10,13 @@ const propTypes = {
   fetchArtist: PropTypes.func.isRequired,
   limit: PropTypes.number.isRequired,
   total: PropTypes.number.isRequired,
+  path: PropTypes.string.isRequired,
+  backUrl: PropTypes.string.isRequired,
   currentArtist: PropTypes.object,
   currentArtistIsFetching: PropTypes.bool,
   isFetching: PropTypes.bool,
   searchQuery: PropTypes.string,
+  currentPage: PropTypes.number,
 };
 
 const defaultTypes = {
@@ -37,7 +40,7 @@ class Albums extends Component {
     let { artistId, currentPage } = this.props;
     let { artistId: nextArtistId, currentPage: nextPage } = nextProps;
 
-    if(artistId != nextArtistId || currentPage != nextPage) {      
+    if(artistId != nextArtistId || currentPage != nextPage) {
       this.init(nextProps);
     }
   }
@@ -45,13 +48,8 @@ class Albums extends Component {
   shouldComponentUpdate(nextProps) {
     let { artistId, currentPage, isFetching } = this.props;
     let { artistId: nextArtistId, currentPage: nextPage, isFetching: nextIsFetching } = nextProps;
-    let fetched = isFetching && !nextIsFetching;
 
-    this.fetched = false;
-    if(artistId != nextArtistId || currentPage != nextPage || fetched) {
-      if(fetched) {
-        this.fetched = true;
-      }
+    if(artistId != nextArtistId || currentPage != nextPage || isFetching != nextIsFetching) {
       return true;
     }
     return false;
@@ -64,10 +62,10 @@ class Albums extends Component {
   }
 
   render() {
-    let { list, limit, currentPage, total, path, backUrl, currentArtist } = this.props;
+    let { list, limit, currentPage, total, path, backUrl, currentArtist, isFetching } = this.props;
 
     return (
-      <div>
+      <div className={isFetching ? 'show-loader': ''}>
         <header className="clearfix">
           <Link className="btn btn-primary pull-left back-btn" to={backUrl}>Back</Link>
           <h1 className="text-center">{currentArtist && currentArtist.name}</h1>
@@ -80,7 +78,7 @@ class Albums extends Component {
           <Paginator limit={limit} path={path} total={total} currentPage={currentPage} />
         </div>
       }
-      { this.fetched && list.length == 0 &&
+      { !isFetching && list.length == 0 &&
         <div className="alert alert-danger text-center">
           We couldn't find any albums
         </div>
