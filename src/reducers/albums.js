@@ -9,6 +9,14 @@ const albums = handleActions({
     },
     throw(state, action) {}
   },
+  'RECEIVED_ALBUMS_FROM_CACHE': {
+    next(state, action) {
+      return Object.assign({}, state, {
+        isFetching: false
+      });
+    },
+    throw(state, action) {}
+  },
   'RECEIVED_ALBUMS': {
     next(state, action) {
       let { items, total } = action.payload.data;
